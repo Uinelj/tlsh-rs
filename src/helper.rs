@@ -96,8 +96,8 @@ pub(crate) fn find_quartiles(buckets: &[u32], bucket_count: usize) -> (u32, u32,
 
     let mut q1 = 0;
     low = 0;
-    //for ii in 0..spl {
-    for item in shortcut_low.iter().take(spl) {
+    //for ii in 0..spl+1 {
+    for item in shortcut_low.iter().take(spl+1) {
         high = *item;
 
         match high.cmp(&p1) {
@@ -124,7 +124,7 @@ pub(crate) fn find_quartiles(buckets: &[u32], bucket_count: usize) -> (u32, u32,
 
     let mut q3 = 0;
     high = end;
-    for item in shortcut_high.iter().take(sph) {
+    for item in shortcut_high.iter().take(sph+1) {
         low = *item;
         match low.cmp(&p3) {
             Less => {
