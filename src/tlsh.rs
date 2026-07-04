@@ -120,8 +120,8 @@ impl FromStr for Tlsh {
         let mut checksum = vec![0; checksum_kind.unwrap().checksum_len()];
         let mut codes = vec![0; bucket_kind.unwrap().bucket_count() >> 2];
 
-        for ii in 0..checksum.len() {
-            checksum[ii] = u8::from_str_radix(
+        for item in &mut checksum {
+            *item = u8::from_str_radix(
                 &s[offset..(offset + 2)].chars().rev().collect::<String>(),
                 16,
             )?;
@@ -207,7 +207,7 @@ impl TlshBuilder {
         }
 
         let mut tmp = vec![0; self.code_size];
-        for ii in 0..self.code_size {
+        for (ii, item) in tmp.iter_mut().enumerate() {
             let mut h = 0;
 
             for jj in 0..4 {
@@ -222,7 +222,7 @@ impl TlshBuilder {
                 }
             }
 
-            tmp[ii] = h;
+            *item = h;
         }
 
         let len = l_capturing(self.data_len).unwrap();
@@ -267,10 +267,8 @@ impl TlshBuilder {
             (j0 + WINDOW_SIZE - 4) % WINDOW_SIZE,
         );
 
-        let mut fed_len = self.data_len;
-
-        for ii in offset..(offset + len) {
-            self.slide_window[j0] = data[ii];
+        for (fed_len, item) in (self.data_len..).zip(data.iter().skip(offset).take(len)) {
+            self.slide_window[j0] = *item;
 
             if fed_len >= 4 {
                 self.checksum = pearson_hash(
@@ -345,8 +343,6 @@ impl TlshBuilder {
                 );
                 self.buckets[r as usize] += 1;
             }
-
-            fed_len += 1;
 
             let tmp = j4;
             j4 = j3;
