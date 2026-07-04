@@ -1,5 +1,5 @@
 [package]
-name = "tlsh"
+name = "tlsh-fixed"
 version = "0.1.0"
 authors = ["1crcbl <1crcbl@protonmail.com>"]
 edition = "2021"
@@ -12,5 +12,8 @@ repository = "https://github.com/1crcbl/tlsh-rs.git"
 
 keywords = ["tlsh", "locality", "sensitive", "hashing"]
 categories = ["algorithms"]
+
+[lib]
+name = "tlsh"
 
 [dependencies]
