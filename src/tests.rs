@@ -235,8 +235,5 @@ fn test_valid_hash() {
     // string respects the min size of 50 while not having enough randomness to get a hash from.
     builder.update("oooooooooooooooooooooooooooooooooooooooooooooooooo".as_bytes());
     let result = builder.build();
-    match result {
-        Err(crate::TlshError::NoValidHash) => assert!(true),
-        _ => assert!(false),
-    }
+    assert!(matches!(result, Err(crate::TlshError::NoValidHash)));
 }

@@ -2,7 +2,7 @@
 name = "tlsh"
 version = "0.1.0"
 authors = ["1crcbl <1crcbl@protonmail.com>"]
-edition = "2018"
+edition = "2021"
 
 license = "BSD-3-Clause OR Apache-2.0"
 
